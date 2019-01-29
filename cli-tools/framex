@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+from deepsurf.framex.utils import is_dt_in_sunlight
+
+while True:
+    if is_dt_in_sunlight(datetime.now(timezone.utc)):
+        name = "surf_cam"
+        request.urlretrieve(
+            "http://www.scheveningenlive.nl/cam_1.jpg", 
+            "{}_{}.jpg".format(name, datetime.now().strftime("%Y%m%d%H%m%S"))
+        )
+        sleep(60)
+    else:
+         sleep(60)   

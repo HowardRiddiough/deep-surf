@@ -17,6 +17,11 @@ setup(
     author_email="howardriddiough@gmail.com",
     packages=["deepsurf"],
     install_requires=[
+        "click==6.7",
+        "numpy==1.15",
+        "jupyter==1.0",
+        "opencv-python==4.0.0.21",
+        "pytesseract==0.2.6",
         "skyfield==1.9"
     ],
     extras_require={

@@ -22,7 +22,6 @@ setup(
         "jupyter==1.0",
         "opencv-python==4.0.0.21",
         "pytesseract==0.2.6",
-        "skyfield==1.9"
     ],
     extras_require={
         "test": {"flake8==3.6.0", "pep8-naming==0.7.0", "pytest==3.7.0", "pytest-cov"},

@@ -9,6 +9,11 @@ from deepsurf.framex import SurfFrames
 @click.option("-o", "--out_path", help="Path to store frames.", required=True)
 @click.option("-l", "--logging", help="Set the logging level", default="loud")
 def main(interval, out_path, logging):
+    """Cli tool enabling easy collection of web cam data by downloading web cam data from scheveningenlive.nl
+
+    Example usage:
+        framex -i 40 -o /Path/to/deep-surf-data -l silent
+    """
     sf = SurfFrames(interval, out_path, logging)
     sf.get_frames()
 

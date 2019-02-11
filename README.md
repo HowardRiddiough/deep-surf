@@ -1,8 +1,7 @@
 # deep-surf
-The goal of this repo is to make live predictions on how many people are surfing Scheveningen Noord using 
-Object Detection. In the future we aim to be able to record wave height and wave quality using Deep Learning.
+The goal of this repo is to record the number of surfers currently in the water at [Scheveningen Noord](https://goo.gl/maps/dxb3422NShQ2). We aim to make those predictions using Object Detection. In the future we aim to be able to record wave height and wave quality using Deep Learning and to apply our methodology to beaches all over the world.
 
-Contributions are welcome, please read our guidelines [here](CONTRIBUTING.MD).
+Contributions are welcome, please read our [guidelines](CONTRIBUTING.MD).
 
 Currently this repo includes:
 

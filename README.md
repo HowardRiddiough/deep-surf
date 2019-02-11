@@ -1,6 +1,8 @@
 # deep-surf
 The goal of this repo is to make live predictions on how many people are surfing Scheveningen Noord using 
-Object Detection.
+Object Detection. In the future we aim to be able to record wave height and wave quality using Deep Learning.
+
+Contributions are welcome, please read our guidelines [here](CONTRIBUTING.MD).
 
 Currently this repo includes:
 
@@ -30,4 +32,25 @@ flag).
 
 ## Data
 
+There are two key data elements: Images and Annotations.
 
+### Images 
+
+Image data is collected hosted on [scheveningenlive.nl](http://www.scheveningenlive.nl/). We currently 
+collect data from two web cams:
+
+1. [Surf Webcam](http://www.scheveningenlive.nl/surf-webcam/)
+![sample webcam data](tests/data/frame/surfwebcam_20190129095446.jpg?raw=true)
+
+2. [Sportsstrand Webcam](http://www.scheveningenlive.nl/sportstrand-webcam/)
+
+
+### Annotations
+
+Annotations record objects that can be found in an image and thier respective location in that image.
+
+
+## Command Line Tools
+
+We have command line tools! In this repo command line tools are well documented and can be found 
+[here](cli-tools).

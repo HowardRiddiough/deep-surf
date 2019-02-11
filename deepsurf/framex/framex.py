@@ -38,6 +38,15 @@ SCH_LONGITUDE_DEGS = 4.265012741088867
 
 class SurfFrames:
     def __init__(self, interval: int, out_path: str, logging_level: str = "silent"):
+        """Provides functionality to download image date from 2 web cams hosted on scheveningenlive.nl and
+        is thus a handy tool to collect data for deep learning. Images downloaded will be saved to `out_path`.
+         The file naming is dynamic: timestamp is concatenated to the camera id.
+
+        Args:
+            interval: Proved in seconds, images will be downloaded every `interval` seconds
+            out_path: The path where images will be saved
+            logging_level: Set the logging level. Default is silent, other options: loud
+        """
         self.interval = interval
         self.out_path = out_path
 
@@ -45,6 +54,8 @@ class SurfFrames:
             logger.setLevel(logging.INFO)
 
     def get_frames(self):
+        """Constantly saves frames to `self.out_path` with a sleep time between downloads of `self.interval`.
+        """
         logger.info("Downloading frames for {} cameras every {} seconds".format(len(CAMS), self.interval))
         while True:
             for cam_name, cam_url in CAMS.items():
@@ -55,19 +66,40 @@ class SurfFrames:
 
     @staticmethod
     def _persist_frame_to_disk(url: str, out_path: str, cam_name: str):
+        """Saves frame to disk with dynamic naming. Timestamps are inferred from the frame using OCR.
+
+        Args:
+            url: Url of web cam image
+            out_path: Path where to save images
+            cam_name: Name of camera
+        """
         frame_array = SurfFrames._request_frame_as_array(url)
         cam_id, dt = SurfFrames._cam_id_timestamp_from_frame_text(frame_array, cam_name)
         cv2.imwrite(os.path.join(out_path, "{}_{}.jpg".format(cam_id, dt)), frame_array)
         logger.info("Saved {} frame to: {}".format(cam_id, out_path))
 
     @staticmethod
-    def _request_frame_as_array(url: str):
+    def _request_frame_as_array(url: str) -> np.ndarray:
+        """Uses urllib to return the webcam image as an numpy array
+
+        Args:
+            url: Url of web cam image
+        """
         resp = urllib.request.urlopen(url)
         frame = np.asarray(bytearray(resp.read()), dtype="uint8")
         return cv2.imdecode(frame, cv2.IMREAD_COLOR)
 
     @staticmethod
     def _cam_id_timestamp_from_frame_text(frame: np.ndarray, cam_name: str):
+        """Uses OCR to infer the timestamp from an image.
+
+        Args:
+            frame: A frame provided as np.ndarray
+            cam_name: Name of camera
+
+        Returns:
+            tuple of unique cam id and timestamp
+        """
         x_min, x_max, y_min, y_max = CAM_CROP[cam_name].values()
         crop_frame = frame[y_min: y_max, x_min: x_max]
         cam_id, _, dt = image_to_string(crop_frame, lang="eng").lower().split("|")

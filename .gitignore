@@ -106,3 +106,6 @@ venv.bak/
 # PyCharm
 .idea/
 .idea
+
+# OS artifacts
+.DS_store

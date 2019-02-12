@@ -1,6 +1,6 @@
 from collections import OrderedDict
 import os
-import urllib
+import urllib.request
 from datetime import datetime
 from time import sleep
 import logging
@@ -34,6 +34,11 @@ CAM_CROP = dict(
 
 SCH_LATITUDE_DEGS = 52.10550355970487
 SCH_LONGITUDE_DEGS = 4.265012741088867
+EXPECTED_IMAGE_TEXT_TUPLE_LENGTH = 3
+
+
+class SurfFramesException(Exception):
+    pass
 
 
 class SurfFrames:
@@ -74,13 +79,17 @@ class SurfFrames:
             cam_name: Name of camera
         """
         frame_array = SurfFrames._request_frame_as_array(url)
-        cam_id, dt = SurfFrames._cam_id_timestamp_from_frame_text(frame_array, cam_name)
-        cv2.imwrite(os.path.join(out_path, "{}_{}.jpg".format(cam_id, dt)), frame_array)
-        logger.info("Saved {} frame to: {}".format(cam_id, out_path))
+        try:
+            cam_id, dt = SurfFrames._cam_id_timestamp_from_frame_text(frame_array, cam_name)
+            cv2.imwrite(os.path.join(out_path, "{}_{}.jpg".format(cam_id, dt)), frame_array)
+            logger.info("Saved {} frame to: {}".format(cam_id, out_path))
+        except SurfFramesException:
+            logger.info("Could not extract text from {} frame".format(cam_name))
+            pass
 
     @staticmethod
     def _request_frame_as_array(url: str) -> np.ndarray:
-        """Uses urllib to return the webcam image as an numpy array
+        """Uses urllib to return the webc am image as an numpy array
 
         Args:
             url: Url of web cam image
@@ -102,6 +111,14 @@ class SurfFrames:
         """
         x_min, x_max, y_min, y_max = CAM_CROP[cam_name].values()
         crop_frame = frame[y_min: y_max, x_min: x_max]
-        cam_id, _, dt = image_to_string(crop_frame, lang="eng").lower().split("|")
+        image_text = image_to_string(crop_frame, lang="eng").lower().split("|")
+
+        if len(image_text) != EXPECTED_IMAGE_TEXT_TUPLE_LENGTH:
+            raise SurfFramesException(
+                "Text does not match expected format. Text extracted:\n{}".format(image_text)
+            )
+        else:
+            cam_id, _, dt = image_text
+
         dt = datetime.strptime(dt, " %d-%m-%Y %H:%M:%S").strftime("%Y%m%d%H%M%S")
         return cam_id.replace(" ", ""), dt

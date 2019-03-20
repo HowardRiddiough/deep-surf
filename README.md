@@ -51,6 +51,9 @@ collect data from two web cams:
 ![sample webcam data](tests/data/frame/surfwebcam_20190129095446.jpg?raw=true)
 
 2. [Sportsstrand Webcam](http://www.scheveningenlive.nl/sportstrand-webcam/)
+![sample webcam data](tests/data/frame/sportstrandwebcam_20190212095550.jpg?raw=true)
+
+
 
 
 ### Annotations

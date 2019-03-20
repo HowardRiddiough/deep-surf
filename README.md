@@ -1,5 +1,14 @@
 # deep-surf
-The goal of this repo is to record the number of surfers currently in the water at [Scheveningen Noord](https://goo.gl/maps/dxb3422NShQ2). We aim to make those predictions using Object Detection. In the future we aim to be able to record wave height and wave quality using Deep Learning and to apply our methodology to beaches all over the world.
+
+[![Travis](https://img.shields.io/travis/HowardRiddiough/deep-surf/master.svg?label=Travis%20CI)](
+    https://travis-ci.org/HowardRiddiough/deep-surf)
+[![codecov](https://codecov.io/gh/HowardRiddiough/deep-surf/branch/master/graph/badge.svg)](
+    https://codecov.io/gh/HowardRiddiough/deep-surf)
+
+The goal of this repo is to record the number of surfers currently in the water at 
+[Scheveningen Noord](https://goo.gl/maps/dxb3422NShQ2). We aim to make those predictions using Object 
+Detection. In the future we aim to be able to record wave height and wave quality using Deep Learning and 
+to apply our methodology to beaches all over the world.
 
 Contributions are welcome, please read our [guidelines](CONTRIBUTING.MD).
 

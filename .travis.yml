@@ -14,10 +14,7 @@ install:
   - pip install .
 
 script:
-  - py.test --cov-report term --cov=tests/
-
-env:
-  - CODECOV_TOKEN=3be39d4f-63a7-494d-8581-4669de5cce1c
+  - pytest --cov=deepsurf
 
 # Push the results back to codecov
 after_success:

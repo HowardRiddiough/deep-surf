@@ -1,0 +1,24 @@
+# Disable sudo to speed up the build
+sudo: false
+
+# Set the build language to Python
+language: python
+
+# Set the python version
+python: 3.5
+
+# Install pip dependencies
+install:
+  - pip install codecov
+  - pip install pytest pytest-cov
+  - pip install .
+
+script:
+  - py.test --cov-report term --cov=tests/
+
+env:
+  - CODECOV_TOKEN=3be39d4f-63a7-494d-8581-4669de5cce1c
+
+# Push the results back to codecov
+after_success:
+  - codecov

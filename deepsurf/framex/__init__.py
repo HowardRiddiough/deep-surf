@@ -1,2 +1,2 @@
 # flake8: noqa:F401
-from .framex import SurfFrames
+from .frame_extraction import SurfFrames
